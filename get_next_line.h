@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:59:22 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/01/22 18:00:18 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/01/23 18:19:15 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 # define FT_GET_NEXT_LINE_H
 
 
-
-int		ft_xxxxx();
-
+char *get_next_line(int fd);
 
 // UTILS //
 
