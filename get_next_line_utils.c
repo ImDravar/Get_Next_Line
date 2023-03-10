@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:19:36 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/03/04 21:37:07 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:40:21 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,43 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
+char	*ft_substr(char *box, unsigned int start, size_t max_len)
+{
+	size_t	len_str;
+	char	*temp;
+	int		i;
+
+	i = 0;
+	if (!box)
+		return (0);
+	len_str = ft_strlen(box);
+	if (start > len_str)
+	{
+		temp = (char *)malloc(sizeof(char) * (1));
+		if (!temp)
+			return (NULL);
+		temp[0] = '\0';
+		return (temp);
+	}
+	if (max_len > len_str - start)
+		max_len = len_str - start;
+	temp = (char *)malloc(sizeof(char) *(max_len + 1));
+	if (!temp)
+		return (NULL);
+	while ((start < len_str) && (max_len > i) && (box[start]))
+			temp[i++] = box[start];
+	temp[i] = '\0';
+	return (temp);
+}
+/*
+	1- IF string is doesnt exist returns 0
+	2- If start is > to the len of str the max_len its 0
+	3- If max_len > len of str minus star then max_len its equal to
+		the len o str minus start
+	4- Create and check the malloc of the new str with the max_len
+	5- If max_len its equal to 0 return the string with a char 0 inside
+
+	*/
 /*
 [Description ft_strlen]
 	1- Iterate the string, and return the counter(i)

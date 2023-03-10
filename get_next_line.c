@@ -6,11 +6,23 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:56:27 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/03/04 17:29:13 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/03/10 19:54:05 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_nline(char *box)
+{
+	int		len_bytes;
+	char	*line;
+	char	*temp;
+
+	temp = ft_strchr(box, '\n');
+	len_bytes  = 1 + (temp - box);
+	
+
+}
 
 char	*ft_read(int fd, char *box)
 {
@@ -23,11 +35,28 @@ char	*ft_read(int fd, char *box)
 		return (NULL); // Limpiar buffer ?
 	while (bytes > 0 && !ft_strchr(buffer, '\n'))
 	{
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		
-
+		if((bytes = read(fd, buffer, BUFFER_SIZE) > 0) //Optimizado ???
+		{
+			buffer[bytes]='\0';
+			box = ft_strjoin(box,buffer):
+		}
 	}
+	free(buffer);
+	//Comprobar bytes
+	return(box);
 }
+/*
+
+[Description ft_read]
+	1- Create a mallow
+		{If doesn't}
+			a- Return Null
+	2- Iterate if bytes > 0 and the buffer are not an '\n'
+		{If its}
+		- Every run save in the variable the fd read count, and if
+			> 0 close the buffer and add the content to the string box
+
+*/
 
 char	*get_next_line(int fd)
 {
@@ -36,6 +65,12 @@ char	*get_next_line(int fd)
 
 	if (fd < 0)
 		return (NULL);
+	if(!box || (box && !ft_strchr(box,'\n')))
+		box = ft_read(fd,box);
+	if(!box)
+		return (NULL);
+
+
 }
 /*
 [Description get_next_line]
@@ -43,10 +78,6 @@ char	*get_next_line(int fd)
 	BUFFER_SIZE
 
 
-[Description ft_read]
-	1- Create a mallow
-			{If doesn't}
-				a- Return Null
 
 */
 /*
