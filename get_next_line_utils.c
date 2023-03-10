@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:19:36 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/03/10 21:40:21 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/03/10 21:54:48 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,7 @@ char	*ft_substr(char *box, unsigned int start, size_t max_len)
 	temp[i] = '\0';
 	return (temp);
 }
-/*
-	1- IF string is doesnt exist returns 0
-	2- If start is > to the len of str the max_len its 0
-	3- If max_len > len of str minus star then max_len its equal to
-		the len o str minus start
-	4- Create and check the malloc of the new str with the max_len
-	5- If max_len its equal to 0 return the string with a char 0 inside
 
-	*/
 /*
 [Description ft_strlen]
 	1- Iterate the string, and return the counter(i)
@@ -124,5 +116,16 @@ char	*ft_substr(char *box, unsigned int start, size_t max_len)
 	4- Copy the *s1 inside the *temp.
 	5- Concat the *s2 inside the *temp.
 
-
+Description ft_substr]
+	0- Create a str temp container, len_str container and counter
+	1- IF string is doesnt exist returns 0
+	2- Get the len of the string
+	3- If start is > to the len of str
+		- Create a malloc, check if exist and return it
+	4- If max_len > len of str minus start
+		- Then max_len its equal to	the len of str minus start
+	5- Create and check the malloc of the new str with the max_len
+	6- Iterate while max_len its < len of str && max_len > counter && box[start] exist
+		- Put inside the temp the str
+	7 - Close and return temp
 	*/

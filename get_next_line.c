@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:56:27 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/03/10 19:54:05 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/03/10 22:13:14 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,21 @@ char	*ft_nline(char *box)
 
 	temp = ft_strchr(box, '\n');
 	len_bytes  = 1 + (temp - box);
-	
-
+	line = ft_substr(box, 0, len_bytes);
+	if (!line)
+		return (NULL);
+	return(line);
 }
+/*
+[Description ft_nline]
+	0- Create  line and temp str containers, and bytes counter
+	1- Put inside temp the box content up to the line separator
+	2- Get the len bytes substracting th temp to the original plus one for the \0
+	3- Get the line 
+	Create (and check)the malloc with the BUFFER_SIZE
+	BUFFER_SIZE
+
+*/
 
 char	*ft_read(int fd, char *box)
 {
@@ -69,6 +81,7 @@ char	*get_next_line(int fd)
 		box = ft_read(fd,box);
 	if(!box)
 		return (NULL);
+
 
 
 }
