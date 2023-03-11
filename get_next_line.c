@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:56:27 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/03/10 22:13:14 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/03/11 09:22:08 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ char	*ft_nline(char *box)
 	0- Create  line and temp str containers, and bytes counter
 	1- Put inside temp the box content up to the line separator
 	2- Get the len bytes substracting th temp to the original plus one for the \0
-	3- Get the line 
+	3- Get the line
 	Create (and check)the malloc with the BUFFER_SIZE
 	BUFFER_SIZE
 
 */
 
-char	*ft_read(int fd, char *box)
+char	*ft_read(int fd, char *mini_box)
 {
 	int		bytes;
 	char	*buffer;
@@ -45,17 +45,23 @@ char	*ft_read(int fd, char *box)
 	buffer = mmalloc(sizeof(char) * (BUFFER_SIZE +1));
 	if (!buffer)
 		return (NULL); // Limpiar buffer ?
-	while (bytes > 0 && !ft_strchr(buffer, '\n'))
+	while (bytes != 0 && !ft_strchr(buffer, '\n'))
 	{
-		if((bytes = read(fd, buffer, BUFFER_SIZE) > 0) //Optimizado ???
+		bytes = read(fd, buffer, BUFFER_SIZE)
+		if (bytes > 0)
 		{
-			buffer[bytes]='\0';
-			box = ft_strjoin(box,buffer):
+			buffer[bytes] = '\0';
+			mini_box = ft_strjoin(mini_box, buffer);
+		}
+		else
+		{
+			free(mini_box);
+			free(buffer);
 		}
 	}
 	free(buffer);
 	//Comprobar bytes
-	return(box);
+	return(mini_box);
 }
 /*
 
@@ -63,11 +69,12 @@ char	*ft_read(int fd, char *box)
 	1- Create a mallow
 		{If doesn't}
 			a- Return Null
-	2- Iterate if bytes > 0 and the buffer are not an '\n'
-		{If its}
-		- Every run save in the variable the fd read count, and if
-			> 0 close the buffer and add the content to the string box
-
+	2- Iterate if bytes != 0 and the buffer are not an '\n'
+		- Every run save in the variable the fd read count, and check if the bytes readed> 0
+			{If its}
+				-Close the buffer and add the content to the string box
+			{If doesn't}
+				-Clean the strs memory
 */
 
 char	*get_next_line(int fd)
