@@ -6,11 +6,12 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 16:19:36 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/03/11 09:38:31 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/03/25 00:54:44 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
 
 char	*ft_strchr(const char *str, int c)
 {
@@ -46,7 +47,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	j = -1;
 	if (!s1)
 	{
-		s1 = mallock(sizeof(char) + 1);
+		s1 = malloc(sizeof(char) + 1);
 		if (!s1)
 			return (0);
 		s1[0] = 0;
@@ -54,21 +55,21 @@ char	*ft_strjoin(char *s1, char *s2)
 	len = ft_strlen(s1) + ft_strlen(s2);
 	temp = (char *)malloc(sizeof(char) * len + 1);
 	if (!temp)
-		return (NULL); //Comprobar hacer un free
+		return (ft_free(&temp));
 	while (s1[++i])
 		temp[i] = s1[i];
 	while (s2[j++])
 		temp[i + j] = s2[j];
 	temp[i + j] = '\0';
-	//check limpiar s1
-	return (str);
+	free(s1);
+	return (temp);
 }
 
 char	*ft_substr(char *box, unsigned int start, size_t max_len)
 {
 	size_t	len_str;
 	char	*temp;
-	int		i;
+	size_t	i;
 
 	i = 0;
 	if (!box)
@@ -112,7 +113,7 @@ char	*ft_substr(char *box, unsigned int start, size_t max_len)
 	3- Create the malloc with the size s1+s2(with +1 for the final \0)
 		and check if it fails.
 		{If fails}
-			a- Return NULL
+			a- Free the temp and
 	4- Copy the *s1 inside the *temp.
 	5- Concat the *s2 inside the *temp.
 
@@ -125,7 +126,8 @@ Description ft_substr]
 	4- If max_len > len of str minus start
 		- Then max_len its equal to	the len of str minus start
 	5- Create and check the malloc of the new str with the max_len
-	6- Iterate while max_len its < len of str && max_len > counter && box[start] exist
-		- Put inside the temp the str
+	6- Iterate while max_len its < len of str
+		&& max_len > counter && box[start] exist
+			- Put inside the temp the str
 	7 - Close and return temp
 	*/

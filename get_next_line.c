@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:56:27 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/03/11 09:53:13 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/03/25 00:58:38 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,29 @@ char	*ft_nline(char *box)
 	BUFFER_SIZE
 */
 
+char	*ft_free(char **mini_box)
+{
+	free(*mini_box);
+	*mini_box = NULL;
+	return (NULL);
+}
+/*
+[Description ft_free]
+	1- Free the str memory
+	2- Make Null the new value of str
+	3- Return NULL
+*/
+
+
 char	*ft_read(int fd, char *mini_box)
 {
 	int		bytes;
 	char	*buffer;
 
 	bytes = 1;
-	buffer = mmalloc(sizeof(char) * (BUFFER_SIZE +1));
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
-		return (NULL); // Limpiar buffer ?
+		return (ft_free(&mini_box));
 	while (bytes != 0 && !ft_strchr(buffer, '\n'))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
@@ -52,14 +66,13 @@ char	*ft_read(int fd, char *mini_box)
 			buffer[bytes] = '\0';
 			mini_box = ft_strjoin(mini_box, buffer);
 		}
-		else
-		{
-			free(mini_box);
-			free(buffer);
-			return (NULL);
-		}
 	}
 	free(buffer);
+	if (bytes < 0)
+	{
+		ft_free(&mini_box);
+		return (mini_box);
+	}
 	return (mini_box);
 }
 /*
@@ -68,7 +81,8 @@ char	*ft_read(int fd, char *mini_box)
 		{If doesn't}
 			a- Return Null
 	2- Iterate if bytes != 0 and the buffer are not an '\n'
-		- Every run save in the variable the fd read count, and check if the bytes readed> 0
+		- Every run save in the variable the fd read count,
+		   and check if the bytes readed > 0
 			{If its}
 				-Close the buffer and add the content to the string box
 			{If doesn't}
@@ -97,18 +111,6 @@ char	*get_next_line(int fd)
 	1- Create (and check)the malloc with the BUFFER_SIZE
 	BUFFER_SIZE
 
-
-
-*/
-/*
-1- Check If the number passed by parameter exist
-   {If doesn't}
-     a- Call [ft_printf_s] ans send "0x0"
-     b- Check if the return of the [ft_printf_s] its incorrect,if its, return -1
-   {If exist}
-     A- Call [ft_printf_s] ans send "0x"
-     B- Check if the return of the [ft_printf_s] its incorrect,if its, return -1
-     C- Call [ft_printf_p_num] ans send the number and the hex base
 
 
 */

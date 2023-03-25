@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:59:22 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/03/11 09:55:36 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/03/25 00:55:08 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,15 @@
 # include<fcntl.h>
 # include<limits.h>
 
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
+#endif
+
 char	*get_next_line(int fd);
 char	*ft_nline(char *box);
 char	*ft_read(int fd, char *mini_box);
 char	*get_next_line(int fd);
+char	*ft_free(char **mini_box);
 
 // UTILS //
 char	*ft_strchr(const char *str, int c);
