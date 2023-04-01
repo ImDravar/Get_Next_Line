@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:56:27 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/03/25 00:58:38 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/01 16:52:43 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ char	*ft_free(char **mini_box)
 	2- Make Null the new value of str
 	3- Return NULL
 */
-
 
 char	*ft_read(int fd, char *mini_box)
 {
