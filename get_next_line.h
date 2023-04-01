@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:59:22 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/01 18:04:16 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/01 19:16:24 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@
 # include<stdlib.h>
 # include<fcntl.h>
 # include<limits.h>
-
+/*
 #ifndef BUFFER_SIZE
 # define BUFFER_SIZE 42
 #endif
+*/
 
 char	*get_next_line(int fd);
 char	*ft_nline(char *box);

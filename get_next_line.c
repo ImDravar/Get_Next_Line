@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:56:27 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/01 18:03:46 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/01 19:18:41 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,9 @@ char	*get_next_line(int fd)
 {
 	static char	*box;
 	char		*line;
+	int			i;
 
+	i = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	if (!box)
@@ -119,9 +121,8 @@ char	*get_next_line(int fd)
 	box = ft_read(fd, box);
 	if (!box)
 		return (NULL);
-	int i = 0;
 	while (box[i] && box[i] != '\n')
-	   i++;
+		i++;
 	line = ft_substr(box, 0, i + 1);
 	box = ft_cutword(box);
 	//	line = ft_nline(box);
