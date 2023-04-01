@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:56:27 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/01 16:52:43 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/01 18:03:46 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ char	*ft_nline(char *box)
 	line = ft_substr(box, 0, len_bytes);
 	if (!line)
 		return (NULL);
+	free(temp);
 	return (line);
 }
+
 /*
 [Description ft_nline]
 	0- Create line and temp str containers, and bytes counter
@@ -35,12 +37,6 @@ char	*ft_nline(char *box)
 	BUFFER_SIZE
 */
 
-char	*ft_free(char **mini_box)
-{
-	free(*mini_box);
-	*mini_box = NULL;
-	return (NULL);
-}
 /*
 [Description ft_free]
 	1- Free the str memory
@@ -56,24 +52,19 @@ char	*ft_read(int fd, char *mini_box)
 	bytes = 1;
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
-		return (ft_free(&mini_box));
-	while (bytes != 0 && !ft_strchr(buffer, '\n'))
+		return (NULL);
+	while (bytes != 0 && !ft_strchr(mini_box, '\n'))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes > 0)
-		{
-			buffer[bytes] = '\0';
-			mini_box = ft_strjoin(mini_box, buffer);
-		}
+		if (bytes < 0)
+			return (NULL);
+		buffer[bytes] = '\0';
+		mini_box = ft_strjoin(mini_box, buffer);
 	}
 	free(buffer);
-	if (bytes < 0)
-	{
-		ft_free(&mini_box);
-		return (mini_box);
-	}
 	return (mini_box);
 }
+
 /*
 [Description ft_read]
 	1- Create a mallow
@@ -88,21 +79,54 @@ char	*ft_read(int fd, char *mini_box)
 				-Clean the strs memory
 */
 
+char	*ft_cutword(char *prt)
+{
+	int		i;
+	int		j;
+	char	*dest;
+
+	i = 0;
+	j = 0;
+	while (prt[i] != '\n' && prt[i])
+		i++;
+	if (!prt[i])
+	{
+		free(prt);
+		return (NULL);
+	}
+	if (prt[i] == '\n')
+		i++;
+	dest = malloc(sizeof(char) * (ft_strlen(prt) - i + 1));
+	if (!dest)
+		return (NULL);
+	while (prt[i])
+		dest[j++] = prt[i++];
+	dest[j] = '\0';
+	free(prt);
+	return (dest);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*box;
 	char		*line;
 
-	if (fd < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!box || (box && !ft_strchr(box, '\n')))
-		box = ft_read(fd, box);
+	if (!box)
+		box = ft_strdup("");
+//	if (!box || (box && !ft_strchr(box, '\n')))
+	box = ft_read(fd, box);
 	if (!box)
 		return (NULL);
-	line = ft_nline(box);
-	if (!line)
+	int i = 0;
+	while (box[i] && box[i] != '\n')
+	   i++;
+	line = ft_substr(box, 0, i + 1);
+	box = ft_cutword(box);
+	//	line = ft_nline(box);
+	if (!line || !line[0])
 		return (NULL);//Comprobar si hacer limpieza recursiva
-	free (box);
 	return (line);
 }
 /*

@@ -3,130 +3,115 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amurcia- <amurcia-@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/04 16:19:36 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/01 16:52:36 by rruiz-sa         ###   ########.fr       */
+/*   Created: 2022/05/31 11:40:10 by amurcia-          #+#    #+#             */
+/*   Updated: 2023/04/01 18:01:51 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *str, int c)
+char	*ft_substr(char *s, unsigned int start, size_t len)
 {
-	while (*str)
+	char	*d;
+	size_t	cont;
+	size_t	len_s;
+
+	cont = 0;
+	if (!s)
+		return (0);
+	len_s = ft_strlen(s);
+	if (len >= len_s - start && start < len_s)
+		len = len_s - start;
+	else if (start >= len_s)
+		len = 0;
+	else if (len > len_s)
+		len = len_s;
+	d = malloc(sizeof(char) * (len + 1));
+	if (!d)
+		return (0);
+	while (cont < len)
+		d[cont++] = s[start++];
+	d[cont] = '\0';
+	return (d);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*s3;
+	int		cont;
+	int		conts3;
+
+	cont = -1;
+	conts3 = 0;
+	if (!s1)
 	{
-		if (*str == (char)c)
-			break ;
-		str++;
+		s1 = (char *)malloc(sizeof(char) * 1);
+		s1[0] = '\0';
 	}
-	if ((char)c == *str)
-		return ((char *)str);
+	if (!s1 || !s2)
+		return (0);
+	s3 = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!s3)
+		return (0);
+	while (s1[++cont])
+		s3[cont] = s1[cont];
+	while (s2[conts3])
+		s3[cont++] = s2[conts3++];
+	s3[cont] = '\0';
+	free(s1);
+	return (s3);
+}
+
+char	*ft_strchr(char *s, int c)
+{
+	int	cont;
+
+	cont = 0;
+	if (!s)
+		return (0);
+	if (c == '\0')
+		return ((char *)(s + cont));
+	while (s[cont] != '\0')
+	{
+		if (s[cont] == (char)c)
+			return ((char *)(s + cont));
+		cont++;
+	}
 	return (0);
 }
 
 size_t	ft_strlen(char *str)
 {
-	size_t	i;
+	size_t	cont;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	cont = 0;
+	if (!str)
+		return (0);
+	while (str[cont])
+		cont++;
+	return (cont);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strdup(char *s1)
 {
-	int		i;
-	int		j;
-	char	*temp;
+	int		cont;
+	char	*s2;
 	int		len;
 
-	i = -1;
-	j = -1;
+	cont = 0;
 	if (!s1)
-	{
-		s1 = malloc(sizeof(char) + 1);
-		if (!s1)
-			return (0);
-		s1[0] = 0;
-	}
-	len = ft_strlen(s1) + ft_strlen(s2);
-	temp = (char *)malloc(sizeof(char) * len + 1);
-	if (!temp)
-		return (ft_free(&temp));
-	while (s1[++i])
-		temp[i] = s1[i];
-	while (s2[j++])
-		temp[i + j] = s2[j];
-	temp[i + j] = '\0';
-	free(s1);
-	return (temp);
-}
-
-char	*ft_substr(char *box, unsigned int start, size_t max_len)
-{
-	size_t	len_str;
-	char	*temp;
-	size_t	i;
-
-	i = 0;
-	if (!box)
 		return (0);
-	len_str = ft_strlen(box);
-	if (start > len_str)
-	{
-		temp = (char *)malloc(sizeof(char) * (1));
-		if (!temp)
-			return (NULL);
-		temp[0] = '\0';
-		return (temp);
-	}
-	if (max_len > len_str - start)
-		max_len = len_str - start;
-	temp = (char *)malloc(sizeof(char) *(max_len + 1));
-	if (!temp)
+	len = ft_strlen(s1);
+	s2 = (char *)malloc(sizeof(char) * (len + 1));
+	if (!s2)
 		return (NULL);
-	while ((start < len_str) && (max_len > i) && (box[start]))
-			temp[i++] = box[start];
-	temp[i] = '\0';
-	return (temp);
+	while (s1[cont] != '\0')
+	{
+		s2[cont] = *((char *)(s1 + cont));
+		cont++;
+	}
+	s2[cont] = '\0';
+	return (s2);
 }
-
-/*
-[Description ft_strlen]
-	1- Iterate the string, and return the counter(i)
-
-[Description ft_strchr]
-	1- Iterate the pointer of the string
-	2- Every iteration check for matches with the character(c)
-		- If it matches go out of the iteration
-	3- Outside the iteration check for the match of (c) and the pointer of str
-		- If it matches return the pointer
-		- If not return (0)
-
-[Description  ft_strjoin]
-	1- Check if *s1  exist.
-		{If doesn't}
-		a- Create a simple (and check) malloc and give a 0 value
-	3- Create the malloc with the size s1+s2(with +1 for the final \0)
-		and check if it fails.
-		{If fails}
-			a- Free the temp and
-	4- Copy the *s1 inside the *temp.
-	5- Concat the *s2 inside the *temp.
-
-Description ft_substr]
-	0- Create a str temp container, len_str container and counter
-	1- IF string is doesnt exist returns 0
-	2- Get the len of the string
-	3- If start is > to the len of str
-		- Create a malloc, check if exist and return it
-	4- If max_len > len of str minus start
-		- Then max_len its equal to	the len of str minus start
-	5- Create and check the malloc of the new str with the max_len
-	6- Iterate while max_len its < len of str
-		&& max_len > counter && box[start] exist
-			- Put inside the temp the str
-	7 - Close and return temp
-	*/
