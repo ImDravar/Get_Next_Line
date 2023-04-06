@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:56:27 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/01 19:18:41 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/06 13:35:17 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,17 +117,21 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!box)
 		box = ft_strdup("");
-//	if (!box || (box && !ft_strchr(box, '\n')))
 	box = ft_read(fd, box);
 	if (!box)
+	{
+		free(box);
 		return (NULL);
+	}
 	while (box[i] && box[i] != '\n')
 		i++;
 	line = ft_substr(box, 0, i + 1);
 	box = ft_cutword(box);
-	//	line = ft_nline(box);
 	if (!line || !line[0])
+	{
+		free(line);
 		return (NULL);//Comprobar si hacer limpieza recursiva
+	}
 	return (line);
 }
 /*
