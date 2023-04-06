@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 19:06:23 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/06 13:07:42 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:11:00 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,10 @@ char	*ft_strdup(char *s1)
 	len = ft_strlen(s1);
 	temp = (char *)malloc(sizeof(char) * (len + 1));
 	if (!temp)
+	{
+		free(s1);
 		return (NULL);
+	}
 	while (s1[cont] != '\0')
 	{
 		temp[cont] = *((char *)(s1 + cont));

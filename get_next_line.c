@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:56:27 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/06 13:35:17 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:16:15 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,31 +79,31 @@ char	*ft_read(int fd, char *mini_box)
 				-Clean the strs memory
 */
 
-char	*ft_cutword(char *prt)
+char	*ft_cut(char *mini_box)
 {
-	int		i;
-	int		j;
-	char	*dest;
+	int		cont_a;
+	int		cont_b;
+	char	*temp;
 
-	i = 0;
-	j = 0;
-	while (prt[i] != '\n' && prt[i])
-		i++;
-	if (!prt[i])
+	cont_a = 0;
+	cont_b = 0;
+	while (mini_box[cont_a] != '\n' && mini_box[cont_a])
+		cont_a++;
+	if (!mini_box[cont_a])
 	{
-		free(prt);
+		free(mini_box);
 		return (NULL);
 	}
-	if (prt[i] == '\n')
-		i++;
-	dest = malloc(sizeof(char) * (ft_strlen(prt) - i + 1));
-	if (!dest)
+	if (mini_box[cont_a] == '\n')
+		cont_a++;
+	temp = malloc(sizeof(char) * (ft_strlen(mini_box) - cont_a + 1));
+	if (!temp)
 		return (NULL);
-	while (prt[i])
-		dest[j++] = prt[i++];
-	dest[j] = '\0';
-	free(prt);
-	return (dest);
+	while (mini_box[cont_a])
+		temp[cont_b++] = mini_box[cont_a++];
+	temp[cont_b] = '\0';
+	free(mini_box);
+	return (temp);
 }
 
 char	*get_next_line(int fd)
@@ -126,11 +126,11 @@ char	*get_next_line(int fd)
 	while (box[i] && box[i] != '\n')
 		i++;
 	line = ft_substr(box, 0, i + 1);
-	box = ft_cutword(box);
+	box = ft_cut(box);
 	if (!line || !line[0])
 	{
 		free(line);
-		return (NULL);//Comprobar si hacer limpieza recursiva
+		return (NULL);
 	}
 	return (line);
 }
