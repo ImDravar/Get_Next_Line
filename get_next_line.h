@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:59:22 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/01 19:16:24 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/06 12:08:33 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_free(char **mini_box);
 char	*ft_strchr(char *str, int c);
 size_t	ft_strlen(char *str);
 char	*ft_strjoin(char *s1, char *s2);
-char	*ft_substr(char *box, unsigned int start, size_t max_len);
+char	*ft_substr(char *mini_box, unsigned int start, size_t max_len);
 char	*ft_strdup(char *s1);
 
 #endif
