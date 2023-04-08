@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:59:22 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/06 14:43:59 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/08 11:04:56 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 */
 
 char	*get_next_line(int fd);
-char	*ft_nline(char *box);
 char	*ft_read(int fd, char *mini_box);
 char	*get_next_line(int fd);
 char	*ft_free(char **mini_box);

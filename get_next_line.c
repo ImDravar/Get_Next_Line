@@ -6,43 +6,11 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:56:27 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/06 15:16:15 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/08 11:21:21 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_nline(char *box)
-{
-	int		len_bytes;
-	char	*line;
-	char	*temp;
-
-	temp = ft_strchr(box, '\n');
-	len_bytes = 1 + (temp - box);
-	line = ft_substr(box, 0, len_bytes);
-	if (!line)
-		return (NULL);
-	free(temp);
-	return (line);
-}
-
-/*
-[Description ft_nline]
-	0- Create line and temp str containers, and bytes counter
-	1- Put inside temp the box content up to the line separator
-	2- Get the len bytes substracting th temp to the original plus one for the \0
-	3- Get the line
-	Create (and check)the malloc with the BUFFER_SIZE
-	BUFFER_SIZE
-*/
-
-/*
-[Description ft_free]
-	1- Free the str memory
-	2- Make Null the new value of str
-	3- Return NULL
-*/
 
 char	*ft_read(int fd, char *mini_box)
 {
@@ -57,7 +25,11 @@ char	*ft_read(int fd, char *mini_box)
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes < 0)
+		{
+			free(mini_box);
+			free(buffer);
 			return (NULL);
+		}
 		buffer[bytes] = '\0';
 		mini_box = ft_strjoin(mini_box, buffer);
 	}
@@ -87,7 +59,7 @@ char	*ft_cut(char *mini_box)
 
 	cont_a = 0;
 	cont_b = 0;
-	while (mini_box[cont_a] != '\n' && mini_box[cont_a])
+	while (mini_box[cont_a] && mini_box[cont_a] != '\n')
 		cont_a++;
 	if (!mini_box[cont_a])
 	{
@@ -119,17 +91,15 @@ char	*get_next_line(int fd)
 		box = ft_strdup("");
 	box = ft_read(fd, box);
 	if (!box)
-	{
-		free(box);
 		return (NULL);
-	}
 	while (box[i] && box[i] != '\n')
 		i++;
 	line = ft_substr(box, 0, i + 1);
 	box = ft_cut(box);
-	if (!line || !line[0])
+	if (!line[0])
 	{
 		free(line);
+		free(box);
 		return (NULL);
 	}
 	return (line);
