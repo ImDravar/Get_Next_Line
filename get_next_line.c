@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:56:27 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/08 13:22:07 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/08 13:32:04 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,12 +130,4 @@ char	*get_next_line(int fd)
 	5-Iterate while str[cont] exist and put the content in a temp str
 	6- Out of the iteration close the temp
 	7- Free the str and return temp
-
-
-[Description get_next_line]
-	1- Create (and check)the malloc with the BUFFER_SIZE
-	BUFFER_SIZE
-
-
-
 */
