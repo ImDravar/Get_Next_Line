@@ -6,11 +6,39 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 17:56:27 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/08 13:32:04 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/08 16:13:19 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_free(char **str)
+{
+	free(*str);
+	*str = NULL;
+	return (NULL);
+}
+/*
+[Description ft_free]
+	1- Free the str memory
+	2- Make Null the new value of str
+	3- Return NULL
+*/
+
+char	*ft_free_double(char **str, char **str2)
+{
+	free(*str);
+	free(*str2);
+	*str = NULL;
+	*str2 = NULL;
+	return (NULL);
+}
+/*
+[Description ft_free]
+	1- Free the str1 & str2 memory
+	2- Make Null the new value of str & str2
+	3- Return NULL
+*/
 
 char	*ft_read(int fd, char *mini_box)
 {
@@ -20,23 +48,25 @@ char	*ft_read(int fd, char *mini_box)
 	bytes = 1;
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
+	{
+		free(mini_box);
 		return (NULL);
-	while (bytes != 0 && !ft_strchr(mini_box, '\n'))
+	}
+	buffer[0] = '\0';
+	while (bytes > 0 && !ft_strchr(mini_box, '\n'))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes < 0)
+			return (ft_free_double(&mini_box, &buffer));
+		if (bytes > 0)
 		{
-			free(mini_box);
-			free(buffer);
-			return (NULL);
+			buffer[bytes] = '\0';
+			mini_box = ft_strjoin(mini_box, buffer);
 		}
-		buffer[bytes] = '\0';
-		mini_box = ft_strjoin(mini_box, buffer);
 	}
 	free(buffer);
 	return (mini_box);
 }
-
 
 char	*ft_cut(char *mini_box)
 {
@@ -46,18 +76,17 @@ char	*ft_cut(char *mini_box)
 
 	cont_a = 0;
 	cont_b = 0;
+	if (!mini_box)
+		return (NULL);
 	while (mini_box[cont_a] && mini_box[cont_a] != '\n')
 		cont_a++;
 	if (!mini_box[cont_a])
-	{
-		free(mini_box);
-		return (NULL);
-	}
+		return (ft_free(&mini_box));
 	if (mini_box[cont_a] == '\n')
 		cont_a++;
 	temp = malloc(sizeof(char) * (ft_strlen(mini_box) - cont_a + 1));
 	if (!temp)
-		return (NULL);
+		return (ft_free(&mini_box));
 	while (mini_box[cont_a])
 		temp[cont_b++] = mini_box[cont_a++];
 	temp[cont_b] = '\0';
@@ -67,26 +96,23 @@ char	*ft_cut(char *mini_box)
 
 char	*get_next_line(int fd)
 {
-	static char	*box;
+	static char	*box = NULL;
 	char		*line;
 	int			i;
 
 	i = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	box = ft_read(fd, box);
+	if (!box || (box && !ft_strchr(box, '\n')))
+		box = ft_read(fd, box);
 	if (!box)
 		return (NULL);
 	while (box[i] && box[i] != '\n')
 		i++;
 	line = ft_substr(box, 0, i + 1);
+	if (!line || !line[0])
+		return (ft_free_double(&box, &line));
 	box = ft_cut(box);
-	if (!line[0])
-	{
-		free(line);
-		free(box);
-		return (NULL);
-	}
 	return (line);
 }
 
@@ -130,4 +156,6 @@ char	*get_next_line(int fd)
 	5-Iterate while str[cont] exist and put the content in a temp str
 	6- Out of the iteration close the temp
 	7- Free the str and return temp
+
+
 */

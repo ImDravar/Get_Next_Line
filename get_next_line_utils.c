@@ -6,7 +6,7 @@
 /*   By: rruiz-sa <rruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 19:06:23 by rruiz-sa          #+#    #+#             */
-/*   Updated: 2023/04/06 15:11:00 by rruiz-sa         ###   ########.fr       */
+/*   Updated: 2023/04/08 16:17:02 by rruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1)
 	{
 		s1 = (char *)malloc(sizeof(char) * 1);
+		if (!s1)
+			return (NULL);
 		s1[0] = '\0';
 	}
-	if (!s1 || !s2)
-		return (0);
 	temp = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!temp)
-		return (0);
+		return (ft_free(&s1));
 	while (s1[++cont])
 		temp[cont] = s1[cont];
 	while (s2[cont_temp])
